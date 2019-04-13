@@ -1,7 +1,7 @@
 import React from "react";
 
 // Styled Components
-import Header from "../styledComponents/header";
+import Header from "../styledComponents/Header";
 
 const Welcome = (props) => (
   <Header>{props.msg}</Header>

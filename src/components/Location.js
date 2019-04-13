@@ -4,6 +4,9 @@ import axios from "axios";
 // Components
 import WeatherDetails from "./WeatherDetails";
 
+// Styled Components
+import Form from "../styledComponents/Form";
+
 const Location = () => {
   // State
   const [location, setLocation] = useState("Mobile, AL");
@@ -16,6 +19,8 @@ const Location = () => {
   const [windSpeed, setWindSpeed] = useState("");
   const [windDirection, setWindDirection] = useState("");
   const [timeOfDay, setTimeOfDay] = useState("");
+  const [uvIndex, setUvIndex] = useState("");
+  const [icon, setIcon] = useState("");
   const [description, setDescription] = useState("");
 
   // API config
@@ -31,6 +36,7 @@ const Location = () => {
   // Call the API!!!
   axios.get(`http://api.weatherbit.io/v2.0/current?city=${(location.replace(" ","").toLowerCase())}&key=${apiKey}`)
   .then(function (response) {
+    console.log(response);
     const { data } = response;
     const info = data.data[0];
     // Update the state
@@ -43,6 +49,8 @@ const Location = () => {
     setWindSpeed(info.wind_spd);
     setWindDirection(info.wind_cdir);
     setTimeOfDay(info.pod);
+    setUvIndex(info.uv);
+    setIcon(info.weather.icon);
     setDescription(info.weather.description);
   })
   .catch(function (error) {
@@ -53,15 +61,15 @@ const Location = () => {
   // Render
   return(
     <Fragment>
-      <form onSubmit={submitForm}>
+      <Form onSubmit={submitForm}>
         <div className="formElem">
           <label>Enter Location</label>
-          <input id="location" type="text" placeholder="City, ST" onChange={updateLocation} />
+          <input id="locationText" type="text" placeholder="City, ST" onChange={updateLocation} autoComplete="off" />
         </div>
         <div className="formElem">
           <button>Go!</button>
         </div>
-      </form>
+      </Form>
       {city && 
         <WeatherDetails
           city={city}
@@ -73,6 +81,8 @@ const Location = () => {
           windSpeed={windSpeed}
           windDirection={windDirection}
           timeOfDay={timeOfDay}
+          uvIndex={uvIndex}
+          icon={icon}
           description={description}
         />
       }

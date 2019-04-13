@@ -1,11 +1,14 @@
-import React, { Fragment } from 'react';
+import React from 'react';
+
+// Style Sheet
+import "./App.css"
 
 // Components
 import Welcome from "./components/Welcome";
 import Location from "./components/Location";
 
 // Styled Components
-import Container from "./styledComponents/container";
+import Container from "./styledComponents/Container";
 
 const Main = () => {
   //Render

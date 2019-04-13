@@ -11,8 +11,7 @@ const WeatherDetails = props => {
   // Check to see if it's raining
   function checkRain(rain){
     let message;
-    rain === null ? message = "No Rain!" : message = "It's Raining!";
-    return message;
+    if(rain != null) return(<p>Rain: {rain}</p>)
   }
 
   // Check for Time of Day
@@ -20,6 +19,11 @@ const WeatherDetails = props => {
     let time;
     timeOfDay === "d" ? time = "day" : time = "night";
     return time;
+  }
+
+  // Show UV Index if Daytime
+  function UVindex(time){
+    if(time === "d") return(<p>UV Index: {Math.round(props.uvIndex)}</p>)
   }
 
   // Render
@@ -31,13 +35,23 @@ const WeatherDetails = props => {
           <h2>{`${props.city}, ${props.state}`}</h2>
         </div>
         <div className="temperature">
-          <p>Temperature: {celsiusToFahrenheit(props.temp)}</p>
-          <p>What it Feels Like: {celsiusToFahrenheit(props.feelsLike)}</p>
+          <img src={`/icons/${props.icon}.png`} alt={props.description} />
+          <div className="twoCol">
+            <p>
+              <span>{celsiusToFahrenheit(props.temp)}&deg;</span>
+              <span>Temperature</span>
+            </p>
+            <p>
+              <span>{celsiusToFahrenheit(props.feelsLike)}&deg;</span>
+              <span>Feels Like</span>
+            </p>
+          </div>
+          {UVindex(props.timeOfDay)}
         </div>
         <div className="details">
           <p>Description: {props.description}</p>
-          <p>Rain: {checkRain(props.rain)}</p>
-          <p>Clouds: {props.clouds}%</p>
+          {checkRain(props.rain)}
+          <p>Cloud Cover: {props.clouds}%</p>
           <p>Wind: {`${props.windSpeed}mph - ${props.windDirection}`}</p>
         </div>
       </div>
