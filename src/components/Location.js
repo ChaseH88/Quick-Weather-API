@@ -41,34 +41,43 @@ const Location = () => {
       await setApiURL(`http://api.weatherbit.io/v2.0/current?postal_code=${location}&country=US&key=${apiKey}`);
   }
 
-  /////////////&postal_code=27601&country=US
+  // On Submit
   function submitForm(e) {
     e.preventDefault();
-  // Call the API!!!
-  axios.get(apiURL)
-  .then(function (response) {
-    console.log(response);
-    const { data } = response;
-    const info = data.data[0];
-    // Update the state
-    setCity(info.city_name);
-    setState(info.state_code);
-    setTemp(info.temp);
-    setfeelsLike(info.app_temp);
-    setClouds(info.clouds);
-    setRain(info.precip);
-    setWindSpeed(info.wind_spd);
-    setWindDirection(info.wind_cdir);
-    setTimeOfDay(info.pod);
-    setUvIndex(info.uv);
-    setIcon(info.weather.icon);
-    setDescription(info.weather.description);
-    // Open the modal
-    openModal(modal);
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
+    // Call the API!!!
+    
+    const getData = async () => {
+      try {
+          const res = await axios.get(apiURL);
+          const { data } = res.data;
+          return data;
+      } catch (err) {
+          console.error(err);
+      }
+    };
+    const weather = getData();
+    // Resolve
+      weather.then((details) => {
+        if(details){
+          details.forEach((info) => {
+            // Update the state
+            setCity(info.city_name);
+            setState(info.state_code);
+            setTemp(info.temp);
+            setfeelsLike(info.app_temp);
+            setClouds(info.clouds);
+            setRain(info.precip);
+            setWindSpeed(info.wind_spd);
+            setWindDirection(info.wind_cdir);
+            setTimeOfDay(info.pod);
+            setUvIndex(info.uv);
+            setIcon(info.weather.icon);
+            setDescription(info.weather.description);
+            // Open the modal
+            openModal(modal);
+          });
+        }
+      });
   }
 
   function openModal(modal){

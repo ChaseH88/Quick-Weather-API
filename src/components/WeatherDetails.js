@@ -25,6 +25,12 @@ const WeatherDetails = props => {
     if(time === "d") return(<p>UV Index: {Math.round(props.uvIndex)}</p>)
   }
 
+  // Fix for API naming my hometown wrong!!!
+  function correctName(city, state){
+    city === "Jefferson" && state === "AL" && (city = "Gardendale");
+    return city;
+  }
+
   // Render
   return(
     <Fragment>
@@ -34,7 +40,7 @@ const WeatherDetails = props => {
           <button onClick={props.modal}>X</button>
         </div>
         <div className="place">
-          <h2>{`${props.city}, ${props.state}`}</h2>
+          <h2>{`${correctName(props.city, props.state)}, ${props.state}`}</h2>
         </div>
         <div className="temperature">
           <img src={`/icons/${props.icon}.png`} alt={props.description} />
