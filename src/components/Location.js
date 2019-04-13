@@ -9,7 +9,8 @@ import Form from "../styledComponents/Form";
 
 const Location = () => {
   // State
-  const [location, setLocation] = useState("Mobile, AL");
+  const [location, setLocation] = useState("");
+  const [apiURL, setApiURL] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [temp, setTemp] = useState("");
@@ -27,14 +28,22 @@ const Location = () => {
   const apiKey = "47b4b166bf68465eb7c4695bd5f4e6f5";
 
   // Functions
-  function updateLocation(e) {
-    setLocation(e.target.value);
+  async function updateLocation(e){
+    let zipcode = parseFloat(e.target.value);
+    //check the input for a string or num and pass to the state
+    isNaN(zipcode) ? setLocation(e.target.value) : setLocation(zipcode);
+    typeof location === "string" ? 
+      await setApiURL(`http://api.weatherbit.io/v2.0/current?city=${(location.replace(" ","").toLowerCase())}&key=${apiKey}`) : 
+      await setApiURL(`http://api.weatherbit.io/v2.0/current?postal_code=${location}&country=US&key=${apiKey}`);
   }
 
+  /////////////&postal_code=27601&country=US
   function submitForm(e) {
     e.preventDefault();
   // Call the API!!!
-  axios.get(`http://api.weatherbit.io/v2.0/current?city=${(location.replace(" ","").toLowerCase())}&key=${apiKey}`)
+  console.log("--------------")
+  console.log(apiURL);
+  axios.get(apiURL)
   .then(function (response) {
     console.log(response);
     const { data } = response;
@@ -64,7 +73,7 @@ const Location = () => {
       <Form onSubmit={submitForm}>
         <div className="formElem">
           <label>Enter Location</label>
-          <input id="locationText" type="text" placeholder="City, ST" onChange={updateLocation} autoComplete="off" />
+          <input required id="locationText" type="text" placeholder="City, ST or ZIP Code" onChange={updateLocation} autoComplete="off" />
         </div>
         <div className="formElem">
           <button>Go!</button>
