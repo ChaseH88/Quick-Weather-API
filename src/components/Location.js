@@ -6,14 +6,16 @@ import WeatherDetails from "./WeatherDetails";
 
 const Location = () => {
   // State
-  const [location, setLocation] = useState("");
+  const [location, setLocation] = useState("Mobile, AL");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [temp, setTemp] = useState("");
+  const [feelsLike, setfeelsLike] = useState("");
   const [clouds, setClouds] = useState("");
   const [rain, setRain] = useState("");
   const [windSpeed, setWindSpeed] = useState("");
   const [windDirection, setWindDirection] = useState("");
+  const [timeOfDay, setTimeOfDay] = useState("");
   const [description, setDescription] = useState("");
 
   // API config
@@ -21,8 +23,6 @@ const Location = () => {
 
   // Functions
   function updateLocation(e) {
-    var input = e.target.value;
-    console.log(input);
     setLocation(e.target.value);
   }
 
@@ -37,11 +37,13 @@ const Location = () => {
     setCity(info.city_name);
     setState(info.state_code);
     setTemp(info.temp);
+    setfeelsLike(info.app_temp);
     setClouds(info.clouds);
     setRain(info.precip);
     setWindSpeed(info.wind_spd);
     setWindDirection(info.wind_cdir);
-    setDescription(info.description);
+    setTimeOfDay(info.pod);
+    setDescription(info.weather.description);
   })
   .catch(function (error) {
     console.log(error);
@@ -63,13 +65,15 @@ const Location = () => {
       {city && 
         <WeatherDetails
           city={city}
-          state = {state}
-          temp = {temp}
-          clouds = {clouds}
-          rain = {rain}
-          windSpeed = {windSpeed}
-          windDirection = {windDirection}
-          description = {description}
+          state={state}
+          temp={temp}
+          feelsLike={feelsLike}
+          clouds={clouds}
+          rain={rain}
+          windSpeed={windSpeed}
+          windDirection={windDirection}
+          timeOfDay={timeOfDay}
+          description={description}
         />
       }
     </Fragment>
