@@ -32,6 +32,12 @@ const Location = () => {
   async function updateLocation(e){
     let zipcode = parseFloat(e.target.value);
     //check the input for a string or num and pass to the state
+    if(isNaN(zipcode)){
+      let loc = e.target.value.replace(" ","").toLowerCase();
+      setLocation(loc)
+    } else {
+      setLocation(zipcode);
+    }
     isNaN(zipcode) ?
       setLocation(e.target.value.replace(" ","").toLowerCase()) :
       setLocation(zipcode);
@@ -80,6 +86,8 @@ const Location = () => {
       });
   }
 
+  // Opens the modal, function is also given to
+  // the WeatherDetails component to close it
   function openModal(modal){
     //flip the value
     modal = !modal
