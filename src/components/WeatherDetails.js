@@ -10,7 +10,6 @@ const WeatherDetails = props => {
 
   // Check to see if it's raining
   function checkRain(rain){
-    let message;
     if(rain != null) return(<p>Rain: {rain}</p>)
   }
 
@@ -31,6 +30,9 @@ const WeatherDetails = props => {
     <Fragment>
       {console.log(props)}
       <div id="location" className={timeOfDay(props.timeOfDay)}>
+        <div className="close">
+          <button onClick={props.modal}>X</button>
+        </div>
         <div className="place">
           <h2>{`${props.city}, ${props.state}`}</h2>
         </div>

@@ -9,6 +9,7 @@ import Form from "../styledComponents/Form";
 
 const Location = () => {
   // State
+  const [modal, setModal] = useState(false);
   const [location, setLocation] = useState("");
   const [apiURL, setApiURL] = useState("");
   const [city, setCity] = useState("");
@@ -31,9 +32,12 @@ const Location = () => {
   async function updateLocation(e){
     let zipcode = parseFloat(e.target.value);
     //check the input for a string or num and pass to the state
-    isNaN(zipcode) ? setLocation(e.target.value) : setLocation(zipcode);
+    isNaN(zipcode) ?
+      setLocation(e.target.value.replace(" ","").toLowerCase()) :
+      setLocation(zipcode);
+    //set the url depending on user input
     typeof location === "string" ? 
-      await setApiURL(`http://api.weatherbit.io/v2.0/current?city=${(location.replace(" ","").toLowerCase())}&key=${apiKey}`) : 
+      await setApiURL(`http://api.weatherbit.io/v2.0/current?city=${(location)}&key=${apiKey}`) : 
       await setApiURL(`http://api.weatherbit.io/v2.0/current?postal_code=${location}&country=US&key=${apiKey}`);
   }
 
@@ -41,8 +45,6 @@ const Location = () => {
   function submitForm(e) {
     e.preventDefault();
   // Call the API!!!
-  console.log("--------------")
-  console.log(apiURL);
   axios.get(apiURL)
   .then(function (response) {
     console.log(response);
@@ -61,10 +63,19 @@ const Location = () => {
     setUvIndex(info.uv);
     setIcon(info.weather.icon);
     setDescription(info.weather.description);
+    // Open the modal
+    openModal(modal);
   })
   .catch(function (error) {
     console.log(error);
   });
+  }
+
+  function openModal(modal){
+    //flip the value
+    modal = !modal
+    console.log(modal);
+    setModal(modal);
   }
 
   // Render
@@ -79,8 +90,9 @@ const Location = () => {
           <button>Go!</button>
         </div>
       </Form>
-      {city && 
+      {modal && 
         <WeatherDetails
+          modal={openModal}
           city={city}
           state={state}
           temp={temp}

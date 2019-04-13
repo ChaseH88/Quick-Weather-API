@@ -25,6 +25,9 @@ form div.formElem button:hover, form div.formElem button:focus {background-color
 
 /* Location Styling */
 #location {position: fixed; left: 15vw; right: 15vw; bottom: 7vw; top: 7vw; background-color: #f1f1f1; box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1);}
+#location div.close {position: absolute; top: 3px; right: 3px}
+#location div.close button {transition: all 300ms ease; background-color: transparent; border: 1px solid #252525;}
+#location div.close button:hover, #location div.close button:focus {background-color: #252525; color: #fff; cursor: pointer;}
 #location div.twoCol {display: flex; justify-content: space-evenly; flex-wrap: wrap;}
 #location div.twoCol p {flex: 1 1 50%; text-align: center;}
 #location div.twoCol p > span {display: block;}
