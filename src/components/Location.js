@@ -5,7 +5,7 @@ import axios from "axios";
 import WeatherDetails from "./WeatherDetails";
 
 // Styled Components
-import Form from "../styledComponents/Form";
+import Form from "./styledComponents/Form";
 
 const Location = () => {
   // State
