@@ -51,7 +51,6 @@ const Location = () => {
   function submitForm(e) {
     e.preventDefault();
     // Call the API!!!
-    
     const getData = async () => {
       try {
           const res = await axios.get(apiURL);
@@ -91,7 +90,10 @@ const Location = () => {
   function openModal(modal){
     //flip the value
     modal = !modal
-    console.log(modal);
+    if(modal === false){
+      document.body.classList.remove("night");
+      document.querySelector("#locationText").value = "";
+    }
     setModal(modal);
   }
 

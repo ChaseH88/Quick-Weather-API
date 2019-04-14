@@ -15,9 +15,9 @@ const WeatherDetails = props => {
 
   // Check for Time of Day
   function timeOfDay(timeOfDay){
-    let time;
-    timeOfDay === "d" ? time = "day" : time = "night";
-    return time;
+    timeOfDay === "d" ? 
+      document.body.classList.add("day") : 
+      document.body.classList.add("night");
   }
 
   // Show UV Index if Daytime
@@ -34,10 +34,10 @@ const WeatherDetails = props => {
   // Render
   return(
     <Fragment>
-      {console.log(props)}
-      <div id="location" className={timeOfDay(props.timeOfDay)}>
+      {timeOfDay(props.timeOfDay)}
+      <div id="location">
         <div className="close">
-          <button onClick={props.modal}>X</button>
+          <button title="Close Window" onClick={props.modal}>X</button>
         </div>
         <div className="place">
           <h2>{`${correctName(props.city, props.state)}, ${props.state}`}</h2>
