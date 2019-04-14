@@ -43,8 +43,8 @@ const Location = () => {
       setLocation(zipcode);
     //set the url depending on user input
     typeof location === "string" ? 
-      await setApiURL(`http://api.weatherbit.io/v2.0/current?city=${(location)}&key=${apiKey}`) : 
-      await setApiURL(`http://api.weatherbit.io/v2.0/current?postal_code=${location}&country=US&key=${apiKey}`);
+      await setApiURL(`https://api.weatherbit.io/v2.0/current?city=${(location)}&key=${apiKey}`) : 
+      await setApiURL(`https://api.weatherbit.io/v2.0/current?postal_code=${location}&country=US&key=${apiKey}`);
   }
 
   // On Submit
@@ -103,7 +103,7 @@ const Location = () => {
       <Form onSubmit={submitForm}>
         <div className="formElem">
           <label>Enter Location</label>
-          <input required id="locationText" type="text" placeholder="City, ST or ZIP Code" onChange={updateLocation} autoComplete="off" />
+          <input required id="locationText" type="text" placeholder="City, ST" onChange={updateLocation} autoComplete="off" />
         </div>
         <div className="formElem">
           <button>Go!</button>
