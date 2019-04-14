@@ -11,11 +11,13 @@ import Location from "./components/Location";
 import Container from "./styledComponents/Container";
 
 const Main = () => {
+  const message = "Welcome to Chase's Weather App";
+  document.title = message;
   //Render
   return(
     <Container>
-        <Welcome msg="Welcome to Chase's Weather App" />
-        <Location />
+        <Welcome msg={message} />
+        <Location msg={message} />
     </Container>
   )
 }
